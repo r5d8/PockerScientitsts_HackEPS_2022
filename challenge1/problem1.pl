@@ -122,8 +122,7 @@ displaySol(_):- nl,nl,!.
 costOfThisSolution(M, Cost):-
     findall(EndT, (member(assignation(T,H),M), taskDuration(T,D), EndT is H+D-1), FinishingHours),
     sort(FinishingHours, SFH),
-    reverse(SFH, [Cost|_]),
-    write('Cost is: ....... '), write(Cost), nl.
+    reverse(SFH, [Cost|_]).
     
 % precondition: elements in list are ordered in increasing value
 maximumDifferenceBetweenConsecutiveElems([],0).
