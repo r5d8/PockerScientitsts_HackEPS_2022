@@ -1,0 +1,16 @@
+machineTasks(m0,[o0t1,o2t1]).
+machineTasks(m1,[o0t0,o1t0,o2t2,o3t0]).
+machineTasks(m2,[o2t0,o3t1]).
+orders(o0,[o0t0,o0t1]).
+orders(o1,[o1t0]).
+orders(o2,[o2t0,o2t1,o2t2]).
+orders(o3,[o3t0,o3t1]).
+taskDuration(o0t0,5).
+taskDuration(o0t1,2).
+taskDuration(o1t0,4).
+taskDuration(o2t0,6).
+taskDuration(o2t1,2).
+taskDuration(o2t2,1).
+taskDuration(o3t0,4).
+taskDuration(o3t1,3).
+maxHourInput(27).

@@ -1,0 +1,227 @@
+{
+  "orders": [
+    {
+      "id": "client::0000",
+      "quantity": 1,
+      "tasks": [
+        { "task_number": 0, "machine": "painter" },
+        { "task_number": 1, "machine": "printer_fdm" },
+        { "task_number": 2, "machine": "hand_polish" }
+      ]
+    },
+    {
+      "id": "client::0001",
+      "quantity": 2,
+      "tasks": [
+        { "task_number": 0, "machine": "painter" },
+        { "task_number": 1, "machine": "printer_fdm" },
+        { "task_number": 2, "machine": "hand_polish" }
+      ]
+    },
+    {
+      "id": "client::0002",
+      "quantity": 3,
+      "tasks": [
+        { "task_number": 0, "machine": "painter" },
+        { "task_number": 1, "machine": "hand_polish" }
+      ]
+    },
+    {
+      "id": "client::0003",
+      "quantity": 2,
+      "tasks": [
+        { "task_number": 0, "machine": "painter" },
+        { "task_number": 1, "machine": "printer_fdm" },
+        { "task_number": 2, "machine": "hand_polish" }
+      ]
+    },
+    {
+      "id": "client::0004",
+      "quantity": 1,
+      "tasks": [
+        { "task_number": 0, "machine": "painter" },
+        { "task_number": 1, "machine": "printer_fdm" },
+        { "task_number": 2, "machine": "hand_polish" }
+      ]
+    },
+    {
+      "id": "client::0005",
+      "quantity": 2,
+      "tasks": [
+        { "task_number": 0, "machine": "printer_fdm" },
+        { "task_number": 1, "machine": "hand_polish" },
+        { "task_number": 2, "machine": "painter" }
+      ]
+    },
+    {
+      "id": "client::0006",
+      "quantity": 1,
+      "tasks": [
+        { "task_number": 0, "machine": "painter" },
+        { "task_number": 1, "machine": "printer_fdm" }
+      ]
+    },
+    {
+      "id": "client::0007",
+      "quantity": 2,
+      "tasks": [
+        { "task_number": 0, "machine": "painter" },
+        { "task_number": 1, "machine": "printer_fdm" }
+      ]
+    },
+    {
+      "id": "client::0008",
+      "quantity": 2,
+      "tasks": [
+        { "task_number": 0, "machine": "printer_fdm" },
+        { "task_number": 1, "machine": "painter" },
+        { "task_number": 2, "machine": "hand_polish" }
+      ]
+    },
+    {
+      "id": "client::0009",
+      "quantity": 3,
+      "tasks": [
+        { "task_number": 0, "machine": "printer_fdm" },
+        { "task_number": 1, "machine": "printer_mjf" },
+        { "task_number": 2, "machine": "painter" }
+      ]
+    },
+    {
+      "id": "client::0010",
+      "quantity": 1,
+      "tasks": [
+        { "task_number": 0, "machine": "hand_polish" },
+        { "task_number": 1, "machine": "painter" },
+        { "task_number": 2, "machine": "printer_fdm" }
+      ]
+    },
+    {
+      "id": "client::0011",
+      "quantity": 3,
+      "tasks": [
+        { "task_number": 0, "machine": "printer_mjf" },
+        { "task_number": 1, "machine": "painter" },
+        { "task_number": 2, "machine": "printer_fdm" },
+        { "task_number": 3, "machine": "hand_polish" }
+      ]
+    },
+    {
+      "id": "client::0012",
+      "quantity": 1,
+      "tasks": [
+        { "task_number": 0, "machine": "hand_polish" },
+        { "task_number": 1, "machine": "painter" },
+        { "task_number": 2, "machine": "printer_fdm" }
+      ]
+    },
+    {
+      "id": "client::0013",
+      "quantity": 1,
+      "tasks": [
+        { "task_number": 0, "machine": "painter" },
+        { "task_number": 1, "machine": "printer_fdm" }
+      ]
+    },
+    {
+      "id": "client::0014",
+      "quantity": 3,
+      "tasks": [
+        { "task_number": 0, "machine": "printer_mjf" },
+        { "task_number": 1, "machine": "painter" },
+        { "task_number": 2, "machine": "printer_fdm" }
+      ]
+    },
+    {
+      "id": "client::0015",
+      "quantity": 2,
+      "tasks": [{ "task_number": 0, "machine": "painter" }]
+    },
+    {
+      "id": "client::0016",
+      "quantity": 1,
+      "tasks": [{ "task_number": 0, "machine": "hand_polish" }]
+    },
+    {
+      "id": "client::0017",
+      "quantity": 1,
+      "tasks": [
+        { "task_number": 0, "machine": "painter" },
+        { "task_number": 1, "machine": "hand_polish" },
+        { "task_number": 2, "machine": "printer_fdm" }
+      ]
+    },
+    {
+      "id": "client::0018",
+      "quantity": 1,
+      "tasks": [
+        { "task_number": 0, "machine": "painter" },
+        { "task_number": 1, "machine": "printer_fdm" }
+      ]
+    },
+    {
+      "id": "client::0019",
+      "quantity": 2,
+      "tasks": [
+        { "task_number": 0, "machine": "painter" },
+        { "task_number": 1, "machine": "hand_polish" }
+      ]
+    }
+  ],
+  "machines": [
+    {
+      "id": "printer_fdm",
+      "category": "print",
+      "load_time": 0.1,
+      "unload_time": 0.1,
+      "execution_time": "1.2 * x",
+      "multiple": false,
+      "max_items": 1
+    },
+    {
+      "id": "printer_mjf",
+      "category": "print",
+      "load_time": 0.15,
+      "unload_time": 0.2,
+      "execution_time": "0.3 * x + 0.5",
+      "multiple": true,
+      "max_items": 3
+    },
+    {
+      "id": "hand_polish",
+      "category": "polish",
+      "load_time": 0,
+      "unload_time": 0,
+      "execution_time": "0.75 * x",
+      "multiple": false,
+      "max_items": 1
+    },
+    {
+      "id": "tumble_polish",
+      "category": "polish",
+      "load_time": 0.15,
+      "unload_time": 0.3,
+      "execution_time": "1",
+      "multiple": true,
+      "max_items": 4
+    },
+    {
+      "id": "dyer",
+      "category": "dye",
+      "load_time": 2,
+      "unload_time": 2.5,
+      "execution_time": "0.8 * x + 4",
+      "multiple": true,
+      "max_items": 5
+    },
+    {
+      "id": "painter",
+      "category": "paint",
+      "load_time": 0.1,
+      "unload_time": 4,
+      "execution_time": "1.2 * x",
+      "multiple": false,
+      "max_items": 1
+    }
+  ]
+}
