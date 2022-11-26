@@ -1,8 +1,18 @@
 import argparse
+import json
 
 
+# Solution in hours 
 def challenge_1(file_path):
-    # Solution in hours
+    # input reading
+    inJSON = open(file_path + "challenge_1_input.json")
+    data = json.load(inJSON)
+
+    # opening/creating output file
+    plInput = open("prolog_input_challenge_1.pl", "w")
+
+    
+
     return 0
 
 
