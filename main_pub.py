@@ -69,7 +69,7 @@ def challenge_1(file_path):
     data = json.load(inJSON)
 
     # opening/creating output file
-    plInput = open("./prolog_input_challenge_1.pl", "w")
+    plInput = open("./challenge1/prolog_input_challenge_1.pl", "w")
 
     #order data
     machines = {}
@@ -91,6 +91,14 @@ def challenge_1(file_path):
     C1_write_literals(plInput, machines, orders, tasks, mac_to_id, ord_to_id)
 
     plInput.close()
+
+    ###########
+    # Execute
+    ###########
+
+    ###########
+    # Process
+    ###########
 
     return 0
 
