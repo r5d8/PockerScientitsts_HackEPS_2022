@@ -1,0 +1,367 @@
+Looking for initial solution with arbitrary cost...
+Generated 6571 clauses over 216 variables. 
+Launching minisat...
+WARNING: for repeatability, setting FPU to use double precision
+============================[ Problem Statistics ]=============================
+|                                                                             |
+|  Number of variables:           216                                         |
+|  Number of clauses:            5046                                         |
+|  Parse time:                   0.00 s                                       |
+|  Simplification time:          0.00 s                                       |
+|                                                                             |
+============================[ Search Statistics ]==============================
+| Conflicts |          ORIGINAL         |          LEARNT          | Progress |
+|           |    Vars  Clauses Literals |    Limit  Clauses Lit/Cl |          |
+===============================================================================
+===============================================================================
+restarts              : 1
+conflicts             : 5              (642 /sec)
+decisions             : 112            (0.00 % random) (14390 /sec)
+propagations          : 235            (30194 /sec)
+conflict literals     : 133            (0.00 % deleted)
+Memory used           : 21.90 MB
+CPU time              : 0.007783 s
+
+SATISFIABLE
+
+Solution found with cost 26
+
+Machine: m0
+Task: o0t1 25-26
+Task: o2t1 7-8
+Machine: m1
+Task: o0t0 20-24
+Task: o1t0 1-4
+Task: o2t2 9-9
+Task: o3t0 5-8
+Machine: m2
+Task: o2t0 1-6
+Task: o3t1 9-11
+
+
+
+
+
+
+
+Now looking for solution with cost 25...
+Generated 5752 clauses over 200 variables. 
+Launching minisat...
+WARNING: for repeatability, setting FPU to use double precision
+============================[ Problem Statistics ]=============================
+|                                                                             |
+|  Number of variables:           200                                         |
+|  Number of clauses:            4327                                         |
+|  Parse time:                   0.00 s                                       |
+|  Eliminated clauses:           0.00 Mb                                      |
+|  Simplification time:          0.01 s                                       |
+|                                                                             |
+============================[ Search Statistics ]==============================
+| Conflicts |          ORIGINAL         |          LEARNT          | Progress |
+|           |    Vars  Clauses Literals |    Limit  Clauses Lit/Cl |          |
+===============================================================================
+===============================================================================
+restarts              : 1
+conflicts             : 2              (165 /sec)
+decisions             : 69             (0.00 % random) (5678 /sec)
+propagations          : 145            (11931 /sec)
+conflict literals     : 48             (0.00 % deleted)
+Memory used           : 21.89 MB
+CPU time              : 0.012153 s
+
+SATISFIABLE
+
+Solution found with cost 24
+
+Machine: m0
+Task: o0t1 23-24
+Task: o2t1 10-11
+Machine: m1
+Task: o0t0 16-20
+Task: o1t0 1-4
+Task: o2t2 24-24
+Task: o3t0 5-8
+Machine: m2
+Task: o2t0 1-6
+Task: o3t1 9-11
+
+
+
+
+
+
+
+Now looking for solution with cost 23...
+Generated 4985 clauses over 184 variables. 
+Launching minisat...
+WARNING: for repeatability, setting FPU to use double precision
+============================[ Problem Statistics ]=============================
+|                                                                             |
+|  Number of variables:           184                                         |
+|  Number of clauses:            3660                                         |
+|  Parse time:                   0.00 s                                       |
+|  Eliminated clauses:           0.00 Mb                                      |
+|  Simplification time:          0.01 s                                       |
+|                                                                             |
+============================[ Search Statistics ]==============================
+| Conflicts |          ORIGINAL         |          LEARNT          | Progress |
+|           |    Vars  Clauses Literals |    Limit  Clauses Lit/Cl |          |
+===============================================================================
+===============================================================================
+restarts              : 1
+conflicts             : 0              (0 /sec)
+decisions             : 32             (0.00 % random) (2876 /sec)
+propagations          : 100            (8987 /sec)
+conflict literals     : 0              (-nan % deleted)
+Memory used           : 21.77 MB
+CPU time              : 0.011127 s
+
+SATISFIABLE
+
+Solution found with cost 22
+
+Machine: m0
+Task: o0t1 21-22
+Task: o2t1 7-8
+Machine: m1
+Task: o0t0 9-13
+Task: o1t0 1-4
+Task: o2t2 22-22
+Task: o3t0 5-8
+Machine: m2
+Task: o2t0 1-6
+Task: o3t1 20-22
+
+
+
+
+
+
+
+Now looking for solution with cost 21...
+Generated 4270 clauses over 168 variables. 
+Launching minisat...
+WARNING: for repeatability, setting FPU to use double precision
+============================[ Problem Statistics ]=============================
+|                                                                             |
+|  Number of variables:           168                                         |
+|  Number of clauses:            3045                                         |
+|  Parse time:                   0.00 s                                       |
+|  Eliminated clauses:           0.00 Mb                                      |
+|  Simplification time:          0.01 s                                       |
+|                                                                             |
+============================[ Search Statistics ]==============================
+| Conflicts |          ORIGINAL         |          LEARNT          | Progress |
+|           |    Vars  Clauses Literals |    Limit  Clauses Lit/Cl |          |
+===============================================================================
+===============================================================================
+restarts              : 1
+conflicts             : 0              (0 /sec)
+decisions             : 1              (0.00 % random) (89 /sec)
+propagations          : 59             (5223 /sec)
+conflict literals     : 0              (-nan % deleted)
+Memory used           : 21.76 MB
+CPU time              : 0.011296 s
+
+SATISFIABLE
+
+Solution found with cost 20
+
+Machine: m0
+Task: o0t1 19-20
+Task: o2t1 7-8
+Machine: m1
+Task: o0t0 9-13
+Task: o1t0 1-4
+Task: o2t2 20-20
+Task: o3t0 5-8
+Machine: m2
+Task: o2t0 1-6
+Task: o3t1 18-20
+
+
+
+
+
+
+
+Now looking for solution with cost 19...
+Generated 3607 clauses over 152 variables. 
+Launching minisat...
+WARNING: for repeatability, setting FPU to use double precision
+============================[ Problem Statistics ]=============================
+|                                                                             |
+|  Number of variables:           152                                         |
+|  Number of clauses:            2482                                         |
+|  Parse time:                   0.00 s                                       |
+|  Eliminated clauses:           0.00 Mb                                      |
+|  Simplification time:          0.00 s                                       |
+|                                                                             |
+============================[ Search Statistics ]==============================
+| Conflicts |          ORIGINAL         |          LEARNT          | Progress |
+|           |    Vars  Clauses Literals |    Limit  Clauses Lit/Cl |          |
+===============================================================================
+===============================================================================
+restarts              : 1
+conflicts             : 0              (0 /sec)
+decisions             : 19             (0.00 % random) (4527 /sec)
+propagations          : 85             (20253 /sec)
+conflict literals     : 0              (-nan % deleted)
+Memory used           : 21.76 MB
+CPU time              : 0.004197 s
+
+SATISFIABLE
+
+Solution found with cost 18
+
+Machine: m0
+Task: o0t1 17-18
+Task: o2t1 7-8
+Machine: m1
+Task: o0t0 9-13
+Task: o1t0 1-4
+Task: o2t2 18-18
+Task: o3t0 5-8
+Machine: m2
+Task: o2t0 1-6
+Task: o3t1 16-18
+
+
+
+
+
+
+
+Now looking for solution with cost 17...
+Generated 2996 clauses over 136 variables. 
+Launching minisat...
+WARNING: for repeatability, setting FPU to use double precision
+============================[ Problem Statistics ]=============================
+|                                                                             |
+|  Number of variables:           136                                         |
+|  Number of clauses:            1971                                         |
+|  Parse time:                   0.00 s                                       |
+|  Eliminated clauses:           0.00 Mb                                      |
+|  Simplification time:          0.00 s                                       |
+|                                                                             |
+============================[ Search Statistics ]==============================
+| Conflicts |          ORIGINAL         |          LEARNT          | Progress |
+|           |    Vars  Clauses Literals |    Limit  Clauses Lit/Cl |          |
+===============================================================================
+===============================================================================
+restarts              : 1
+conflicts             : 0              (0 /sec)
+decisions             : 1              (0.00 % random) (127 /sec)
+propagations          : 62             (7886 /sec)
+conflict literals     : 0              (-nan % deleted)
+Memory used           : 21.76 MB
+CPU time              : 0.007862 s
+
+SATISFIABLE
+
+Solution found with cost 16
+
+Machine: m0
+Task: o0t1 15-16
+Task: o2t1 7-8
+Machine: m1
+Task: o0t0 10-14
+Task: o1t0 1-4
+Task: o2t2 16-16
+Task: o3t0 5-8
+Machine: m2
+Task: o2t0 1-6
+Task: o3t1 14-16
+
+
+
+
+
+
+
+Now looking for solution with cost 15...
+Generated 2437 clauses over 120 variables. 
+Launching minisat...
+WARNING: for repeatability, setting FPU to use double precision
+============================[ Problem Statistics ]=============================
+|                                                                             |
+|  Number of variables:           120                                         |
+|  Number of clauses:            1512                                         |
+|  Parse time:                   0.00 s                                       |
+|  Eliminated clauses:           0.00 Mb                                      |
+|  Simplification time:          0.00 s                                       |
+|                                                                             |
+============================[ Search Statistics ]==============================
+| Conflicts |          ORIGINAL         |          LEARNT          | Progress |
+|           |    Vars  Clauses Literals |    Limit  Clauses Lit/Cl |          |
+===============================================================================
+===============================================================================
+restarts              : 1
+conflicts             : 0              (-nan /sec)
+decisions             : 1              (0.00 % random) (inf /sec)
+propagations          : 67             (inf /sec)
+conflict literals     : 0              (-nan % deleted)
+Memory used           : 21.77 MB
+CPU time              : 0 s
+
+SATISFIABLE
+
+Solution found with cost 14
+
+Machine: m0
+Task: o0t1 13-14
+Task: o2t1 7-8
+Machine: m1
+Task: o0t0 5-9
+Task: o1t0 10-13
+Task: o2t2 14-14
+Task: o3t0 1-4
+Machine: m2
+Task: o2t0 1-6
+Task: o3t1 12-14
+
+
+
+
+
+
+
+Now looking for solution with cost 13...
+Generated 1930 clauses over 104 variables. 
+Launching minisat...
+WARNING: for repeatability, setting FPU to use double precision
+============================[ Problem Statistics ]=============================
+|                                                                             |
+|  Number of variables:           104                                         |
+|  Number of clauses:            1105                                         |
+|  Parse time:                   0.00 s                                       |
+|  Eliminated clauses:           0.00 Mb                                      |
+|  Simplification time:          0.00 s                                       |
+|                                                                             |
+===============================================================================
+Solved by simplification
+restarts              : 0
+conflicts             : 0              (0 /sec)
+decisions             : 0              (-nan % random) (0 /sec)
+propagations          : 71             (40068 /sec)
+conflict literals     : 0              (-nan % deleted)
+Memory used           : 21.63 MB
+CPU time              : 0.001772 s
+
+UNSATISFIABLE
+
+Unsatisfiable. So the optimal solution was this one with cost 14:
+Machine: m0
+Task: o0t1 13-14
+Task: o2t1 7-8
+Machine: m1
+Task: o0t0 5-9
+Task: o1t0 10-13
+Task: o2t2 14-14
+Task: o3t0 1-4
+Machine: m2
+Task: o2t0 1-6
+Task: o3t1 12-14
+
+
+%% END OF FOUND SOLUTION %%

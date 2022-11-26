@@ -65,7 +65,7 @@ def C1_write_literals(plInput, machines, orders, tasks, mac_to_id, ord_to_id):
 # Solution in hours 
 def challenge_1(file_path):
     # input reading
-    inJSON = open(file_path + "/" + "challenge_1_input.json")
+    inJSON = open(file_path + "/challenge1/" + "challenge_1_input.json")
     data = json.load(inJSON)
 
     # opening/creating output file
