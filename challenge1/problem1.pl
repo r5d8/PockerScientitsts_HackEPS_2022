@@ -16,7 +16,7 @@ symbolicOutput(0).  % set to 1 to see symbolic output only; 0 otherwise.
 
 machine(M) :- machineTasks(M,_).
 task(T) :- taskDuration(T,_).
-hour(H) :- maxHourInput(MH), between(1,MH,H).
+hour(H) :- 1 =< H.
 
 preceedes(T,S) :- orders(_,L), nth1(X,L,T), nth1(Y,L,S), X<Y.
 
