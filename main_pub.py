@@ -1,17 +1,87 @@
 import argparse
 import json
-
+from functools import reduce
 
 # Solution in hours 
 def challenge_1(file_path):
     # input reading
-    inJSON = open(file_path + "challenge_1_input.json")
+    inJSON = open(file_path + "/" + "challenge_1_input.json")
     data = json.load(inJSON)
 
     # opening/creating output file
-    plInput = open("prolog_input_challenge_1.pl", "w")
+    plInput = open("./prolog_input_challenge_1.pl", "w")
 
+    #order data
+    machines = {}
+
+    mac_to_id = {} #Map a machine name to its id
+    id_to_mac = {} #Map a machine's id to its name
+
+    for idm in range(len(data.get("machines"))):
+        m = data.get("machines")[idm]
+        machines[m.get('id')] = []
+        mac_to_id[m.get('id')] = "m" + str(idm)
+        id_to_mac["m" + str(idm)] = m.get('id')
     
+    orders = {}
+    tasks = {}
+
+    ord_to_id = {}
+    id_to_ord = {}
+
+    for ido in range(len(data.get("orders"))):
+        ord = data.get("orders")[ido]
+
+        name = ord.get('name')
+        o_tasks = ord.get('tasks')
+
+        orders[name] = []
+
+        ord_to_id[name] = "o" + str(ido)
+        id_to_ord["o" + str(ido)] = name
+
+        for idt in range(len(o_tasks)):
+            tas = o_tasks[idt]
+            task_name = "o" + str(ido) + "t" + str(idt)
+            
+            tasks[task_name] = tas.get("duration")
+            machines[tas.get("machine")].append(task_name)
+            orders[name].append(task_name)
+
+    #create literals for prolog
+    literals = []
+
+    for m in machines.items():
+        l = "machineTasks(" + mac_to_id[m[0]] + ",["
+        for t in m[1]:
+            l += (t + ",")
+        
+        if len(m[1]) > 0: l = l[:-1]
+        l += ("]).")
+
+        literals.append(l)
+    
+    for o in orders.items():
+        l = "orders(" + ord_to_id[o[0]] + ",["
+        for t in o[1]:
+            l += (t + ",")
+        
+        if len(m[1]) > 0: l = l[:-1]
+        l += ("]).")
+        literals.append(l)
+    
+    for t in tasks.items():
+        l = "taskDuration(" + t[0] + "," + str(t[1]) + ")."
+        literals.append(l)
+
+    sumHoresTotal = reduce(lambda x, acc: x + acc, tasks.values(), 0)
+    
+    literals.append("maxHourInput(" + str(sumHoresTotal) + ").")
+
+    for l in literals:
+        plInput.write(l + "\n")
+
+    plInput.close()
 
     return 0
 
