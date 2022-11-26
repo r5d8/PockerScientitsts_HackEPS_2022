@@ -2,33 +2,14 @@ import argparse
 import json
 from functools import reduce
 
-# Solution in hours 
-def challenge_1(file_path):
-    # input reading
-    inJSON = open(file_path + "/" + "challenge_1_input.json")
-    data = json.load(inJSON)
-
-    # opening/creating output file
-    plInput = open("./prolog_input_challenge_1.pl", "w")
-
-    #order data
-    machines = {}
-
-    mac_to_id = {} #Map a machine name to its id
-    id_to_mac = {} #Map a machine's id to its name
-
+def C1_get_machines(data, machines, mac_to_id, id_to_mac):
     for idm in range(len(data.get("machines"))):
         m = data.get("machines")[idm]
         machines[m.get('id')] = []
         mac_to_id[m.get('id')] = "m" + str(idm)
         id_to_mac["m" + str(idm)] = m.get('id')
-    
-    orders = {}
-    tasks = {}
 
-    ord_to_id = {}
-    id_to_ord = {}
-
+def C1_get_tasks_orders(data, machines, orders, tasks, ord_to_id, id_to_ord):
     for ido in range(len(data.get("orders"))):
         ord = data.get("orders")[ido]
 
@@ -48,7 +29,7 @@ def challenge_1(file_path):
             machines[tas.get("machine")].append(task_name)
             orders[name].append(task_name)
 
-    #create literals for prolog
+def C1_write_literals(plInput, machines, orders, tasks, mac_to_id, ord_to_id):
     literals = []
 
     for m in machines.items():
@@ -80,6 +61,34 @@ def challenge_1(file_path):
 
     for l in literals:
         plInput.write(l + "\n")
+
+# Solution in hours 
+def challenge_1(file_path):
+    # input reading
+    inJSON = open(file_path + "/" + "challenge_1_input.json")
+    data = json.load(inJSON)
+
+    # opening/creating output file
+    plInput = open("./prolog_input_challenge_1.pl", "w")
+
+    #order data
+    machines = {}
+    orders = {}
+    tasks = {}
+
+    mac_to_id = {} #Map a machine name to its id
+    id_to_mac = {} #Map a machine's id to its name
+
+    ord_to_id = {}
+    id_to_ord = {}
+    
+    C1_get_machines(data, machines, mac_to_id, id_to_mac)
+
+    
+    C1_get_tasks_orders(data, machines, orders, tasks, ord_to_id, id_to_ord)
+    
+    #create literals for prolog
+    C1_write_literals(plInput, machines, orders, tasks, mac_to_id, ord_to_id)
 
     plInput.close()
 
