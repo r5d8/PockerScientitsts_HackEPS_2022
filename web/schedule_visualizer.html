@@ -1,0 +1,123 @@
+<html>
+<head>
+<title>HackEPS 2022</title>
+<link rel="stylesheet" href="main.css">
+</head>
+
+<h1> Origen studio challenge: Job Shop Problem</h1>
+<div id="container">
+    <div style="width: 40%; float: left">
+        <form id="upload">
+            <label for="file">Choose the input json:</label>
+            <input type="file" id="file" accept=".json">
+        </form>
+            <!--<select id="input" onchange="changeInput()"></select> -->
+    </div>
+    <div style="width: 50%; float: left">
+        <label for="challenge">Choose the challenge:</label>
+        <select id="challenge" onchange = "dropdownMenu()">   
+        <option> Challenge1 </option>  
+        <option> Challenge2 </option>    
+        </select> 
+    </div>
+</div>
+
+<br></br>
+
+<div>
+    <div>
+        <div id="scheduleStyle">
+            <table id="scheduleTable"></table>
+        </div>
+        <div id="legendStyle">
+            <table id="legend"></table>
+        </div>    
+    </div>
+</div>
+
+<br></br>
+<div>
+    <form>
+        <button type="button" onclick="computeSchedule()">Compute schedule</button>
+    </form>    
+</div>
+
+<script type="text/javascript" src="computation.js"></script>
+<script type="text/javascript" src="drawSchedule.js"></script>
+<script type="text/javascript">
+
+
+let fileContents = "";
+document.getElementById('file')
+    .addEventListener('change', function() {
+        
+    var fr=new FileReader();
+    fr.onload=function(){
+        fileContents = fr.result;
+    }
+    fr.readAsText(this.files[0]);
+});
+
+function logFile (event) {
+    let str = event.target.result;
+	let json = JSON.parse(str);
+	//console.log('string', str);
+	console.log('json', json);  
+}
+
+function fillInputSelection() {
+    let label = document.createElement("label");
+    label.innerHTML = "Choose the input json: "
+    label.htmlFor = "input";
+    let select = document.getElementById('input');
+
+    let spacer = document.createElement("label");
+    spacer.innerHTML = "Holaa: "
+    spacer.htmlFor = "label";
+
+    document.getElementById("container").appendChild(label).appendChild(select);
+}
+
+function addOptGroup(labelName, files) {
+    let select = document.getElementById('input');
+
+    let optgroup = document.createElement("OPTGROUP");
+    optgroup.label = labelName;
+
+    for (const file of files) {
+        let opt = document.createElement("option");
+        opt.value = file;
+        opt.text = file;
+        optgroup.appendChild(opt);
+    }
+    select.appendChild(optgroup);
+}
+
+function dropdownMenu() {  
+    var list = document.getElementById("challenge");  
+    document.getElementById("challenge").value = list.options[list.selectedIndex].text; 
+    var index = list.options[list.selectedIndex].text;
+}  
+
+function computeSchedule() {
+    // Compute schedule and paint it
+    var list = document.getElementById("challenge"); 
+    document.getElementById("challenge").value = list.options[list.selectedIndex].text; 
+    var nomOpcio = list.options[list.selectedIndex].text;
+    let valorChallenge = nomOpcio.slice(-1);
+
+    let outputJSON = [];
+    if (valorChallenge == 1) {
+        outputJSON = computeChallenge1(fileContents);
+        drawSchedule1(outputJSON);
+    } else if (valorChallenge == 2) {
+        outputJSON = computeChallenge2(fileContents);
+        drawSchedule2(outputJSON);
+    } else {
+        console.log("You have to choose a challenge!")
+    }
+}
+
+</script>
+
+</html>
