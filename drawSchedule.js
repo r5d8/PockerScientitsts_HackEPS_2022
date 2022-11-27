@@ -45,7 +45,6 @@ function drawSchedule1(jsonOutput) {
             }
         }
     }
-
     drawLegend(colorMap);
 }
 
@@ -76,7 +75,6 @@ function drawLegend(colorMap) {
 
 function drawSchedule2(jsonOutput) {
     let colorMap = new Map();
-
     let table = document.getElementById("scheduleTable");
 
     let row = table.insertRow(0);
@@ -108,6 +106,7 @@ function drawSchedule2(jsonOutput) {
             }
             let startCell = parseInt(task["start_at"]);
             let endCell = parseInt(task["end_at"]);
+            
 
             for (k = startCell; k < endCell; k++) {
                 row.cells[k + 1].style.border = "medium solid #000000";
@@ -121,30 +120,9 @@ function drawSchedule2(jsonOutput) {
             }
         }
     }
-
     drawLegend(colorMap);
 }
 
-function drawLegend(colorMap) {
-    let legend = document.getElementById("legend");
-    for (const m in colorMap) {
-        let row = legend.insertRow(0);
-
-        let order = row.insertCell(0);
-        order.innerHTML = m;
-        order.style.textAlign = "center";
-
-        let color = row.insertCell(1);
-        color.style.background = colorMap[m];
-        color.style.textAlign = "center";
-    }
-    let row = legend.insertRow(0);
-    row.style.textAlign = "center";
-    let cellOrder = row.insertCell(0);
-    cellOrder.innerHTML = "Order";
-    cellOrder.style.width = 200;
-
-    let cellColor = row.insertCell(1);
-    cellColor.innerHTML = "Color";
-    cellColor.style.width = 200;
+function deleteTable(myTable) {
+    document.getElementById("myTable").deleteRow(0);
 }

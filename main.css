@@ -22,7 +22,7 @@ div.ne {
   position:fixed;
 }
 
-.h1 {
+h1,label, option, button, input {
    text-align:center; 
    font-family: 'Courier New', Courier, monospace;
 }
