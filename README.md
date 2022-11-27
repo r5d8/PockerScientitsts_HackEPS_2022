@@ -9,3 +9,12 @@
 * Francesc Holly
 * Pol Sturlese
 
+## Technologies used
+
+* Python
+* Prolog
+* Flask
+* JavaScript(Vanila)
+* HTML
+* CSS
+
