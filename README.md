@@ -9,7 +9,7 @@
 * Francesc Holly
 * Pol Sturlese
 
-## Technologies used
+## Technologies stack
 
 * Python
 * Flask
