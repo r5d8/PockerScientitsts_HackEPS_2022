@@ -12,8 +12,9 @@
 ## Technologies used
 
 * Python
-* Prolog
 * Flask
+* Jupyter Notebook
+* Prolog
 * JavaScript(Vanila)
 * HTML
 * CSS
