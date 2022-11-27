@@ -1,8 +1,8 @@
 # HackEPS 2022
 
-Challenge: Origen studio challenge: Job Shop Problem
+## Challenge: Origen studio challenge: Job Shop Problem
 
-Authors:
+## Authors:
 
 * Jaume Casals 
 * Marta Granero
