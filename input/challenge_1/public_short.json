@@ -1,0 +1,67 @@
+{
+  "orders": [
+    {
+      "name": "charmander_figure::client_4710",
+      "tasks": [
+        {
+          "machine": "print_3d",
+          "duration": 5
+        },
+        {
+          "machine": "paint",
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "name": "marketing_pin::client_0123",
+      "tasks": [
+        {
+          "machine": "print_3d",
+          "duration": 4
+        }
+      ]
+    },
+    {
+      "name": "finish_order_412::client_3122",
+      "tasks": [
+        {
+          "machine": "assembler",
+          "duration": 6
+        },
+        {
+          "machine": "paint",
+          "duration": 2
+        },
+        {
+          "machine": "print_3d",
+          "duration": 1
+        }
+      ]
+    },
+    {
+      "name": "model_suite_prototype::client_8692",
+      "tasks": [
+        {
+          "machine": "print_3d",
+          "duration": 4
+        },
+        {
+          "machine": "assembler",
+          "duration": 3
+        }
+      ]
+    }
+  ],
+  "machines": [
+    {
+      "id": "paint"
+    },
+    {
+      "id": "print_3d"
+    },
+    {
+      "id": "assembler"
+    }
+  ]
+}
