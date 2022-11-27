@@ -28,7 +28,7 @@ function drawSchedule1(jsonOutput) {
         machine.innerHTML = jsonOutput["assignation"][i]["id"];
         machine.style.background = "#DFDFDF";
         machine.style.width = 500;
-        for (j = 0; j < jsonOutput["cost"]; j++) {
+        for (j = 0; j < jsonOutput["cost"]-1; j++) {
             let cell = row.insertCell(j+1);
             cell.style.width = 155;
         } 
