@@ -5,6 +5,7 @@ async function postNewScheduleComputation(json_contents, path) {
 
         let res = await fetch(url, {
             method: 'POST',
+            cors: 'no-cors',
             headers: {
                 'Content-Type': 'application/json',
             },

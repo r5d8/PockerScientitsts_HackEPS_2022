@@ -3,6 +3,13 @@ function drawSchedule1(jsonOutput) {
     let colorMap = new Map();
 
     let table = document.getElementById("scheduleTable");
+    table.innerHTML = "";
+
+    let costLabel = document.getElementById("solutionCost");
+    costLabel.innerHTML = "Solution found with cost: " + (jsonOutput["cost"] - 1);
+
+    let timeLabel = document.getElementById("computationTime");
+    timeLabel.innerHTML = "Solution computed in: " + computationTime + " ms";
 
     let row = table.insertRow(0);
     row.insertCell(0);
@@ -18,10 +25,10 @@ function drawSchedule1(jsonOutput) {
         let row = table.insertRow(i);
         row.style.background = "#EFEFEF";
         let machine = row.insertCell(0);
-        machine.innerHTML = "Machine " + jsonOutput["assignation"][i]["id"].substring(6, 8);
+        machine.innerHTML = jsonOutput["assignation"][i]["id"];
         machine.style.background = "#DFDFDF";
         machine.style.width = 500;
-        for (j = 0; j < jsonOutput["cost"]; j++) {
+        for (j = 0; j < jsonOutput["cost"]-1; j++) {
             let cell = row.insertCell(j+1);
             cell.style.width = 155;
         } 
@@ -51,6 +58,8 @@ function drawSchedule1(jsonOutput) {
 
 function drawLegend(colorMap) {
     let legend = document.getElementById("legend");
+    legend.innerHTML = "";
+
     for (const m in colorMap) {
         let row = legend.insertRow(0);
 
