@@ -9,6 +9,10 @@
 * Francesc Holly
 * Pol Sturlese
 
+# Architecture diagram
+
+![plot diagram](./architecture-project.png)
+
 ## Technologies stack
 
 * Python
