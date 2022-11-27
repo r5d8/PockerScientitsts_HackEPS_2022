@@ -346,10 +346,8 @@ def api_challenge_2_prolog(json_info):
 
     return
 
-def api_request_ended_challenge_2():
+def api_ask_end_2():
     return
-
-
 
 
 
