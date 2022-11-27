@@ -27,12 +27,12 @@ def homepage():
 @app.route('/challenge1', methods=['POST'])
 def api_request_challenge_1():
     if not (request.json): return "ERROR: Please enter a JSON.", 400
-    api_challenge_1_prolog()
+    api_challenge_1_prolog(request.json)
     return "", 200
 
 # Returns challenge 1's execution
-@app.route('/trucks', methods=['GET'])
+@app.route('/challenge1', methods=['GET'])
 def api_request_ended_challenge_1():
     json, optimum = api_ask_end()
-    if (json == ""): return "", 200
+    if (json == ""): return "", 204
     else: return json, 200

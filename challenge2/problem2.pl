@@ -34,30 +34,36 @@ maxHourInput(100).
 
 %%%%%% Some helpful definitions to make the code cleaner:
 
-processFinishesAt(Start, Duration, Finish):- Finish is Start+Duration-1.
-
 machine(M) :- machineTasks(M,_).
 task(T) :- taskQuantity(T,_).
 hour(H) :- 1 =< H.
-hourToDay(H,D) :- fail.
+hourToDay(H,D) :- hour(H), OffH is max(0, H-16), (OffH = 0 -> D is 1; D is 2+div(floor(OffH-1),24)).
 preceedes(T,S) :- orders(_,L), nth1(X,L,T), nth1(Y,L,S), X<Y.
 
 quantities([], 0).
-quantities([T|L], QS):- taskQuantity(T, Q), QSQ is QS-Q, quantities(L, QSQ);
+quantities([T|L], QS):- taskQuantity(T, Q), quantities(L, PrevQ), QS is PrevQ+Q.
 
 execTimeOfMachineByQItems(M, Q, T):- machineConfig(M,_,_,Mult,Add,_), T is Mult*Q+Add.
 
-containedInWorkHours(I, F):- fail.
-validLoadStart(M,H):- machineConfig(M,L,_,_,_,_), processFinishesAt(H,L,F), containedInWorkHours(H,F).
-validUnloadStart(M,H):- machineConfig(M,_,U,_,_,_), processFinishesAt(H,U,F), containedInWorkHours(H,F).
+isWorkHour(H):- hourIsWorkDay(H), hourToDay(H,D), DayH is H-16-24*(D-2), DayH >= 9, DayH =< 17.
+isWorkDay(D):- Dmod7 is mod(D,7), Dmod7 > 0, Dmod7 < 6.
+hourIsWorkDay(H):- hourToDay(H,D), isWorkDay(D).
+containedInWorkHours(I, F):- isWorkHour(I), isWorkHour(F), hourToDay(I,D), hourToDay(F,D).
+validLoad(M,I,F):- machineConfig(M,L,_,_,_,_), F is I+L, containedInWorkHours(I,F).
+validUnload(M,I,F):- machineConfig(M,_,U,_,_,_), F is I+U, containedInWorkHours(I,F).
 
-machineExec(M, TL, I, F):- 
+findNextWorkHour(H,H):- isWorkHour(H).
+findNextWorkHour(H,WH):- hourToDay(H,D), D1 is D+1, isWorkDay(D1), WH is (D1-1)*24+1.
+findNextWorkHour(H,WH):- hourToDay(H,D), D1 is D+3, isWorkDay(D1), WH is (D1-1)*24+1.
+
+machineExecFinishesAt(M, TL, I, F):- machineTasks(M, L), subset(TL,L), machineConfig(M, _, UT, _, _, MaxI), validLoad(M,I,FiLT), quantities(TL,Q), Q=<MaxI, execTimeOfMachineByQItems(M,Q,T), ((IniUT is FiLT+T, validUnload(M,IniUT,Fin)) -> F is Fin; (PH is FiLT+T+UT, findNextWorkHour(PH, NWH), validUnload(M,NWH,F))).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % 1.- Declare SAT variables to be used
 
-satVariable( assignation(T,H) ):- task(T), hour(H). % Means task T starts at hour H at its machine.
+satVariable( assignation(T,H) ):- task(T), hour(H). % Means task T is assigned to an execution batch that starts to load at time H.
+satVariable( execution(M,TL,I,F) ):- machineExecFinishesAt(M, TL, I, F). % Means machine M makes execution with tasks TL starting at I, finishing at F.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -66,6 +72,7 @@ satVariable( assignation(T,H) ):- task(T), hour(H). % Means task T starts at hou
 
 writeClauses(infinite):- !, maxHourInput(MaxHour), writeClauses(MaxHour),!.
 writeClauses(MaxHour):-
+    relateSatVars,
     tasksInsideTimeWindow(MaxHour),
     tasksOfSameOrderSorted(MaxHour),
     nonOverlappingTasksByMachine(MaxHour),
@@ -73,60 +80,58 @@ writeClauses(MaxHour):-
     true,!.
 writeClauses(_):- told, nl, write('writeClauses failed!'), nl,nl, halt.
 
+%Done
+relateSatVars:-
+    machine(M),
+    findall( assignation(T,_), (machineTasks(M,MT), member(T,MT)), Lits ),
+    findall( Tk, (member(assignation(Tk,_),Lits)), TL),
+    machineExecFinishesAt(M, TL, H, F),
+    member(assignation(TA,H), Lits),
+    writeClause(-execution(M,TL,H,F), assignation(TA,H)),
+    fail.
+relateSatVars.
+
+%Done
+tasksInsideTimeWindow(MaxHour) :- 
+    machineTasks(M,MT), between(1,MaxHour,I), 
+    maxHourInput(INP), NMH is MaxHour+1, between(NMH, INP,F), F>MaxHour, 
+    subset(TL,MT),
+    writeClause([-execution(M,TL,I,F)]),
+    fail.
+tasksInsideTimeWindow(_).
+
+%Done
 nonOverlappingTasksByMachine(MaxHour):-
     machine(M),
     machineTasks(M,L),
-    task(T1),
-    task(T2),
-    T1 \= T2,
-    member(T1,L),
-    member(T2,L),
-    between(1,MaxHour,H),
-    taskDuration(T1,D),
-    EndT1 is H+D,
-    Max1 is MaxHour+1,
-    EndMaxT1 is min(EndT1, Max1),
-    taskAtHIncompatibleWithTaskFromIToF(T1, H, T2, H, EndMaxT1),
+    subset(TL1,L),
+    subset(TL2,L),
+    \listEquals(TL1,TL2),
+    between(1,MaxHour,H1),
+    between(1,MaxHour,H2),
+    H1 =< H2,
+    machineExecFinishesAt(M, TL1, H1, F1),
+    H2 =< F1,
+    machineExecFinishesAt(M, TL2, H2, F2),
+    writeClause([-execution(M,TL1,H1,F1),-execution(M,TL2,H2,F2)]),
     fail.
 nonOverlappingTasksByMachine(_).
 
+listEquals(A,B):- subset(A,B), subset(B,A).
+
+%Done
 tasksOfSameOrderSorted(MaxHour):-
     task(T1),
     task(T2),
     preceedes(T1,T2),
-    between(1,MaxHour,H),
-    taskDuration(T1,D),
-    EndT1 is H+D,
-    Max1 is MaxHour+1,
-    EndMaxT1 is min(EndT1, Max1),
-    taskAtHIncompatibleWithTaskFromIToF(T1, H, T2, 1, EndMaxT1),
+    findall( execution(M,TL,H,_), (machineTasks(M,MT), subset(TL,MT), member(T1,TL), between(1,MaxHour,H)), Lits ),
+    member(execution(M,TL,I,F), Lits),
+    between(I,F,H2),
+    writeClause([-execution(M,TL,I,F),-assignation(T2,H2)]),
     fail.
 tasksOfSameOrderSorted(_).
 
-taskAtHIncompatibleWithTaskFromIToF(T1, H, T2, I, F) :-
-    I<F,
-    writeClause([-assignation(T1,H), -assignation(T2,I)]),
-    I1 is I+1,
-    taskAtHIncompatibleWithTaskFromIToF(T1, H, T2, I1, F).
-taskAtHIncompatibleWithTaskFromIToF(_,_,_,F,F).
-
-tasksInsideTimeWindow(MaxHour) :- 
-    task(T),
-    taskDuration(T,D),
-    BackDist is MaxHour+1-D,
-    Max1 is MaxHour+1,
-    writeNegLateTasks(T, BackDist, Max1),
-    fail.
-tasksInsideTimeWindow(_).
-
-writeNegLateTasks(T, H, MAX):-
-    H < MAX,
-    writeClause([-assignation(T,H)]),
-    H1 is H+1,
-    writeNegLateTasks(T,H1,MAX).
-writeNegLateTasks(_,MAX,MAX).
-
-
+%Done
 tasksGetAssignedOnce(MaxHour):-
     task(T),
     findall( assignation(T,H), between(1,MaxHour,H), Lits ),
@@ -137,15 +142,15 @@ tasksGetAssignedOnce(_).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 3. This predicate displays a given solution M:
 
-displaySol(Model):-
-    machineTasks(M,LM),
-    write('Machine: '), write(M), nl,
-    task(T), member(T,LM),
-    write('Task: '), write(T), write(' '),
-    member( assignation(T,H), Model ),
-    taskDuration(T,D),
-    EndT is H+D-1,
-    write(H), write('-'), write(EndT), nl, fail.
+displaySol(Model):- write('SOLUTIOOON'), nl, fail.
+    %machineTasks(M,LM),
+    %write('Machine: '), write(M), nl,
+    %task(T), member(T,LM),
+    %write('Task: '), write(T), write(' '),
+    %member( assignation(T,H), Model ),
+    %taskDuration(T,D),
+    %EndT is H+D-1,
+    %write(H), write('-'), write(EndT), nl, fail.
 displaySol(_):- nl,nl,!.
 
 
@@ -153,7 +158,7 @@ displaySol(_):- nl,nl,!.
 % 4. This predicate computes the cost of a given solution M:
     
 costOfThisSolution(M, Cost):-
-    findall(EndT, (member(assignation(T,H),M), taskDuration(T,D), EndT is H+D-1), FinishingHours),
+    findall(EndT, member(execution(_,_,_,EndT),M), FinishingHours),
     sort(FinishingHours, SFH),
     reverse(SFH, [Cost|_]).
     

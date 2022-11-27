@@ -11,6 +11,14 @@ import threading
 which_order = lambda tid: tid.split('t')[0]
 which_task_number = lambda tid: int(tid.split('t')[1])
 
+mac_to_id = {} #Map a machine name to its id
+id_to_mac = {} #Map a machine's id to its name
+
+ord_to_id = {}
+id_to_ord = {}
+
+deltatime = 0
+
 def C1_get_machines(data, machines, mac_to_id, id_to_mac):
     for idm in range(len(data.get("machines"))):
         m = data.get("machines")[idm]
@@ -84,15 +92,12 @@ def challenge_1(file_path):
     machines = {}
     orders = {}
     tasks = {}
-
+    
     mac_to_id = {} #Map a machine name to its id
     id_to_mac = {} #Map a machine's id to its name
 
     ord_to_id = {}
     id_to_ord = {}
-    
-    C1_get_machines(data, machines, mac_to_id, id_to_mac)
-
     
     C1_get_tasks_orders(data, machines, orders, tasks, ord_to_id, id_to_ord)
     
@@ -114,17 +119,22 @@ def challenge_1(file_path):
 def thread_function_challenge1():
     global init_time, deltatime
     init_time = deltatime = 0
+    print("Start_compilation")
     os.system('./challenge1/make problem1')
     init_time = time()
+    print("Start_compu")
     os.system('./challenge1/problem1 > prolog_output_challenge_1.txt')
     deltatime = timedelta(seconds=(time() - init_time))
 
 def api_challenge_1_prolog(json_info):
-    data = json.load(json_info)
-
+    data = json_info 
+    global mac_to_id, id_to_mac, ord_to_id, id_to_ord
+    
     # opening/creating output file
     plInput = open("./challenge1/prolog_input_challenge_1.pl", "w")
-
+        
+    ord_to_id = {}
+    id_to_ord
     #order data
     machines = {}
     orders = {}
@@ -145,7 +155,7 @@ def api_challenge_1_prolog(json_info):
     C1_write_literals(plInput, machines, orders, tasks, mac_to_id, ord_to_id)
 
     ##start_execution
-    x = threading.Thread(target=thread_function_challenge1, args=(1,))
+    x = threading.Thread(target=thread_function_challenge1, daemon = True)
     x.start()
 
     return
@@ -155,13 +165,14 @@ def api_ask_end():
     if deltatime == 0:
         return "", False
     else:
+        global mac_to_id, id_to_mac, ord_to_id, id_to_ord
         
         file_path = "./challenge1/"
 
         raw = ""
         with open(file_path + "prolog_output_challenge_1.txt", "r") as f:
             raw = reduce(lambda acc, x: acc + x + '\n', [line.strip() for line in f.readlines()], "")
-
+        
         #raw = open(file_path + "prolog_output_challenge_1.txt", "r")
         raw_sol = raw.split("Unsatisfiable. So the optimal solution was this one with cost ")
 
