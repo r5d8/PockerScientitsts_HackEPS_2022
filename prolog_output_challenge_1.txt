@@ -15,12 +15,12 @@ WARNING: for repeatability, setting FPU to use double precision
 ===============================================================================
 ===============================================================================
 restarts              : 1
-conflicts             : 5              (1254 /sec)
-decisions             : 112            (0.00 % random) (28098 /sec)
-propagations          : 235            (58956 /sec)
+conflicts             : 5              (459 /sec)
+decisions             : 112            (0.00 % random) (10279 /sec)
+propagations          : 235            (21568 /sec)
 conflict literals     : 133            (0.00 % deleted)
 Memory used           : 21.90 MB
-CPU time              : 0.003986 s
+CPU time              : 0.010896 s
 
 SATISFIABLE
 
@@ -54,7 +54,7 @@ WARNING: for repeatability, setting FPU to use double precision
 |  Number of clauses:            4327                                         |
 |  Parse time:                   0.00 s                                       |
 |  Eliminated clauses:           0.00 Mb                                      |
-|  Simplification time:          0.00 s                                       |
+|  Simplification time:          0.01 s                                       |
 |                                                                             |
 ============================[ Search Statistics ]==============================
 | Conflicts |          ORIGINAL         |          LEARNT          | Progress |
@@ -62,12 +62,12 @@ WARNING: for repeatability, setting FPU to use double precision
 ===============================================================================
 ===============================================================================
 restarts              : 1
-conflicts             : 2              (253 /sec)
-decisions             : 69             (0.00 % random) (8730 /sec)
-propagations          : 145            (18345 /sec)
+conflicts             : 2              (140 /sec)
+decisions             : 69             (0.00 % random) (4823 /sec)
+propagations          : 145            (10136 /sec)
 conflict literals     : 48             (0.00 % deleted)
 Memory used           : 21.89 MB
-CPU time              : 0.007904 s
+CPU time              : 0.014305 s
 
 SATISFIABLE
 
@@ -110,11 +110,11 @@ WARNING: for repeatability, setting FPU to use double precision
 ===============================================================================
 restarts              : 1
 conflicts             : 0              (0 /sec)
-decisions             : 32             (0.00 % random) (5734 /sec)
-propagations          : 100            (17918 /sec)
+decisions             : 32             (0.00 % random) (2726 /sec)
+propagations          : 100            (8520 /sec)
 conflict literals     : 0              (-nan % deleted)
 Memory used           : 21.77 MB
-CPU time              : 0.005581 s
+CPU time              : 0.011737 s
 
 SATISFIABLE
 
@@ -148,7 +148,7 @@ WARNING: for repeatability, setting FPU to use double precision
 |  Number of clauses:            3045                                         |
 |  Parse time:                   0.00 s                                       |
 |  Eliminated clauses:           0.00 Mb                                      |
-|  Simplification time:          0.00 s                                       |
+|  Simplification time:          0.01 s                                       |
 |                                                                             |
 ============================[ Search Statistics ]==============================
 | Conflicts |          ORIGINAL         |          LEARNT          | Progress |
@@ -157,11 +157,11 @@ WARNING: for repeatability, setting FPU to use double precision
 ===============================================================================
 restarts              : 1
 conflicts             : 0              (0 /sec)
-decisions             : 1              (0.00 % random) (252 /sec)
-propagations          : 59             (14876 /sec)
+decisions             : 1              (0.00 % random) (73 /sec)
+propagations          : 59             (4315 /sec)
 conflict literals     : 0              (-nan % deleted)
 Memory used           : 21.76 MB
-CPU time              : 0.003966 s
+CPU time              : 0.013673 s
 
 SATISFIABLE
 
@@ -204,11 +204,11 @@ WARNING: for repeatability, setting FPU to use double precision
 ===============================================================================
 restarts              : 1
 conflicts             : 0              (0 /sec)
-decisions             : 19             (0.00 % random) (2087 /sec)
-propagations          : 85             (9337 /sec)
+decisions             : 19             (0.00 % random) (1732 /sec)
+propagations          : 85             (7746 /sec)
 conflict literals     : 0              (-nan % deleted)
 Memory used           : 21.76 MB
-CPU time              : 0.009104 s
+CPU time              : 0.010973 s
 
 SATISFIABLE
 
@@ -250,12 +250,12 @@ WARNING: for repeatability, setting FPU to use double precision
 ===============================================================================
 ===============================================================================
 restarts              : 1
-conflicts             : 0              (0 /sec)
-decisions             : 1              (0.00 % random) (234 /sec)
-propagations          : 62             (14527 /sec)
+conflicts             : 0              (-nan /sec)
+decisions             : 1              (0.00 % random) (inf /sec)
+propagations          : 62             (inf /sec)
 conflict literals     : 0              (-nan % deleted)
 Memory used           : 21.76 MB
-CPU time              : 0.004268 s
+CPU time              : 0 s
 
 SATISFIABLE
 
@@ -298,11 +298,11 @@ WARNING: for repeatability, setting FPU to use double precision
 ===============================================================================
 restarts              : 1
 conflicts             : 0              (0 /sec)
-decisions             : 1              (0.00 % random) (143 /sec)
-propagations          : 67             (9566 /sec)
+decisions             : 1              (0.00 % random) (128 /sec)
+propagations          : 67             (8590 /sec)
 conflict literals     : 0              (-nan % deleted)
 Memory used           : 21.77 MB
-CPU time              : 0.007004 s
+CPU time              : 0.0078 s
 
 SATISFIABLE
 
@@ -343,10 +343,10 @@ Solved by simplification
 restarts              : 0
 conflicts             : 0              (0 /sec)
 decisions             : 0              (-nan % random) (0 /sec)
-propagations          : 71             (11739 /sec)
+propagations          : 71             (11562 /sec)
 conflict literals     : 0              (-nan % deleted)
 Memory used           : 21.63 MB
-CPU time              : 0.006048 s
+CPU time              : 0.006141 s
 
 UNSATISFIABLE
 
