@@ -188,7 +188,7 @@ def api_ask_end():
 
         for m in assig.split("Machine: ")[1:]:
             t = m.split('\n')
-            dicMac = {"id" : t[0]}
+            dicMac = {"id" : id_to_mac[t[0]]}
             dicMac["tasks"] = []
 
             for tt in t[1:-1]:
