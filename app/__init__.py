@@ -36,3 +36,17 @@ def api_request_ended_challenge_1():
     json, optimum = api_ask_end()
     if (json == ""): return "", 204
     else: return json, 200
+
+# Starts challenge 2 execution
+@app.route('/challenge2', methods=['POST'])
+def api_request_challenge_1():
+    if not (request.json): return "ERROR: Please enter a JSON.", 400
+    api_challenge_2_prolog(request.json)
+    return "", 200
+
+# Returns challenge 2's execution
+@app.route('/challenge2', methods=['GET'])
+def api_request_ended_challenge_2():
+    json, optimum = api_ask_end_2()
+    if (json == ""): return "", 204
+    else: return json, 200

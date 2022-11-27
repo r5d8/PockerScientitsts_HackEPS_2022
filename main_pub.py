@@ -19,6 +19,16 @@ id_to_ord = {}
 
 deltatime = 0
 
+def linear_eq_params(eq):
+    if eq == "":
+        return 0, 0
+    elif ' * x + ' in eq:
+        return float(eq.split(' * x + ')[0]), float(eq.split(' * x + ')[1])
+    elif ' * x' in eq:
+        return float(eq.split(' * x')[0]), 0
+    elif not ('x' in eq):
+        return 0, float(eq)
+
 def C1_get_machines(data, machines, mac_to_id, id_to_mac):
     for idm in range(len(data.get("machines"))):
         m = data.get("machines")[idm]
@@ -208,9 +218,136 @@ def api_ask_end():
         result_processed = {"cost" : cost, "assignation" : machines_res}
         return result_processed, True
 
+def C2_get_machines(data, machines, machine_config, mac_to_id, id_to_mac):
+    for idm in range(len(data.get("machines"))):
+        m = data.get("machines")[idm]
+        machines[m.get('id')] = []
+        mac_to_id[m.get('id')] = "m" + str(idm)
+        id_to_mac["m" + str(idm)] = m.get('id')
+    
+    for idm in range(len(data.get("machines"))):
+        m = data.get("machines")[idm]
 
+        MUL, ADD = linear_eq_params(m.get("execution_time"))
+        machine_config[m.get('id')] = {
+            "LT": float(m.get("load_time")),
+            "UT": float(m.get("unload_time")),
+            "MUL": MUL,
+            "ADD": ADD,
+            "MAXI": m.get("max_items")
+        }
+    
+
+    # opening/creating output file
+    plInput = open("./challenge2/prolog_input_challenge_2.pl", "w")
+
+def C2_get_tasks_orders(data, machines, orders, tasks, ord_to_id, id_to_ord):
+    for ido in range(len(data.get("orders"))):
+        ord = data.get("orders")[ido]
+
+        name = ord.get('id')
+        o_tasks = ord.get('tasks')
+        qtt = ord.get('quantity')
+
+        orders[name] = []
+
+        ord_to_id[name] = "o" + str(ido)
+        id_to_ord["o" + str(ido)] = name
+
+        for tas in o_tasks:
+            idt = int(tas.get("task_number"))
+            task_name = "o" + str(ido) + "t" + str(idt)
+            
+            tasks[task_name] = qtt
+            machines[tas.get("machine")].append(task_name)
+            orders[name].append(task_name)
+
+def C2_write_literals(plInput, machines, machine_config, orders, tasks, mac_to_id, ord_to_id):
+    literals = []
+
+    for m in machines.items():
+        l = "machineTasks(" + mac_to_id[m[0]] + ",["
+        for t in m[1]:
+            l += (t + ",")
         
+        if len(m[1]) > 0: l = l[:-1]
+        l += ("]).")
 
+        literals.append(l)
+    
+    for o in orders.items():
+        l = "orders(" + ord_to_id[o[0]] + ",["
+        for t in o[1]:
+            l += (t + ",")
+        
+        if len(m[1]) > 0: l = l[:-1]
+        l += ("]).")
+        literals.append(l)
+    
+    for t in tasks.items():
+        l = "taskDuration(" + t[0] + "," + str(t[1]) + ")."
+        literals.append(l)
+    
+    for mc in machine_config.items():
+        l = "machineConfig(" + mc[0] + ","
+        for param in mc[1].values():
+            l += str(param) + ","
+        l = l[:-1]
+        l += ")."
+        literals.append(l)
+    
+    for l in literals:
+        plInput.write(l + "\n")
+    
+    plInput.close()
+
+def thread_function_challenge2():
+    global init_time, deltatime
+    init_time = deltatime = 0
+    print("Start_compilation")
+    os.system('./challenge2/make problem2')
+    init_time = time()
+    print("Start_compu")
+    os.system('./challenge2/problem2 > prolog_output_challenge_2.txt')
+    deltatime = timedelta(seconds=(time() - init_time))
+
+def api_challenge_2_prolog(json_info):
+    data = json_info 
+    global mac_to_id, id_to_mac, ord_to_id, id_to_ord
+    
+    # opening/creating output file
+    plInput = open("./challenge2/prolog_input_challenge_2.pl", "w")
+        
+    ord_to_id = {}
+    id_to_ord
+    #order data
+    machines = {}
+    orders = {}
+    tasks = {}
+    machine_config = {}
+
+    mac_to_id = {} #Map a machine name to its id
+    id_to_mac = {} #Map a machine's id to its name
+
+    ord_to_id = {}
+    id_to_ord = {}
+    
+    C2_get_machines(data, machines, machine_config, mac_to_id, id_to_mac)
+
+    
+    C2_get_tasks_orders(data, machines, orders, tasks, ord_to_id, id_to_ord)
+    
+    #create literals for prolog
+    C2_write_literals(plInput, machines, machine_config, orders, tasks, mac_to_id, ord_to_id)
+
+    ##start_execution
+    x = threading.Thread(target=thread_function_challenge2, daemon = True)
+    x.start()
+
+    return
+
+def api_request_ended_challenge_2():
+    return
 
 
 
