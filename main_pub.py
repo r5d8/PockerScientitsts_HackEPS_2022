@@ -130,10 +130,11 @@ def thread_function_challenge1():
     global init_time, deltatime
     init_time = deltatime = 0
     print("Start_compilation")
-    os.system('./challenge1/make problem1')
+    os.system('make clean')
+    os.system('make problem1')
     init_time = time()
     print("Start_compu")
-    os.system('./challenge1/problem1 > prolog_output_challenge_1.txt')
+    os.system('./problem1 > prolog_output_challenge_1.txt')
     deltatime = timedelta(seconds=(time() - init_time))
 
 def api_challenge_1_prolog(json_info):
@@ -141,7 +142,7 @@ def api_challenge_1_prolog(json_info):
     global mac_to_id, id_to_mac, ord_to_id, id_to_ord
     
     # opening/creating output file
-    plInput = open("./challenge1/prolog_input_challenge_1.pl", "w")
+    plInput = open("./prolog_input_challenge_1.pl", "w")
         
     ord_to_id = {}
     id_to_ord
@@ -177,7 +178,7 @@ def api_ask_end():
     else:
         global mac_to_id, id_to_mac, ord_to_id, id_to_ord
         
-        file_path = "./challenge1/"
+        file_path = "./"
 
         raw = ""
         with open(file_path + "prolog_output_challenge_1.txt", "r") as f:
@@ -186,10 +187,10 @@ def api_ask_end():
         #raw = open(file_path + "prolog_output_challenge_1.txt", "r")
         raw_sol = raw.split("Unsatisfiable. So the optimal solution was this one with cost ")
 
-        if len(raw_sol) > 0: raw_sol = raw_sol[1]
+        if len(raw_sol) > 1: raw_sol = raw_sol[1]
         else : 
             print("UNSAT!!")
-            #return 0
+            return {"cost" : -1, "assignation" : {}}, False
 
         raw_sol = raw_sol.split('\n\n%% END OF FOUND SOLUTION %%')[0]
         cost, assig = raw_sol.split(':\n')

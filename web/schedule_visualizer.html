@@ -16,8 +16,8 @@
     <div style="width: 50%; float: left">
         <label for="challenge">Choose the challenge:</label>
         <select id="challenge" onchange = "dropdownMenu()">   
-        <option> Challenge1 </option>  
-        <option> Challenge2 </option>    
+        <option> Challenge1 </option>
+        <option> Challenge2 </option>
         </select> 
     </div>
 </div>
@@ -36,6 +36,18 @@
 </div>
 
 <br></br>
+
+<div>
+    <div>
+        <label id="solutionCost"></label>
+    </div>
+    <div>
+        <label id="computationTime"></label>
+    </div>
+</div>
+
+
+
 <div>
     <form>
         <button type="button" onclick="computeSchedule()">Compute schedule</button>
@@ -46,6 +58,7 @@
 <script type="text/javascript" src="drawSchedule.js"></script>
 <script type="text/javascript">
 
+let computationTime;
 
 let fileContents;
 document.getElementById('file')
@@ -65,34 +78,6 @@ function logFile (event) {
 	console.log('json', json);  
 }
 
-function fillInputSelection() {
-    let label = document.createElement("label");
-    label.innerHTML = "Choose the input json: "
-    label.htmlFor = "input";
-    let select = document.getElementById('input');
-
-    let spacer = document.createElement("label");
-    spacer.innerHTML = "Holaa: "
-    spacer.htmlFor = "label";
-
-    document.getElementById("container").appendChild(label).appendChild(select);
-}
-
-function addOptGroup(labelName, files) {
-    let select = document.getElementById('input');
-
-    let optgroup = document.createElement("OPTGROUP");
-    optgroup.label = labelName;
-
-    for (const file of files) {
-        let opt = document.createElement("option");
-        opt.value = file;
-        opt.text = file;
-        optgroup.appendChild(opt);
-    }
-    select.appendChild(optgroup);
-}
-
 function dropdownMenu() {  
     var list = document.getElementById("challenge");  
     document.getElementById("challenge").value = list.options[list.selectedIndex].text; 
@@ -101,6 +86,8 @@ function dropdownMenu() {
 
 function computeSchedule() {
     if (fileContents == undefined) return;
+    const t0 = performance.now();
+
     // Compute schedule and paint it
     var list = document.getElementById("challenge"); 
     document.getElementById("challenge").value = list.options[list.selectedIndex].text; 
@@ -110,15 +97,21 @@ function computeSchedule() {
     let outputJSON = [];
     if (valorChallenge == 1) {
         computeChallenge1(fileContents).then((newJson) => {
+            if (newJson['cost'] < 0) {
+                alert('UNSATISFIABLE SCHEDULING');
+                return;
+            }
+            computationTime = performance.now() - t0;
             outputJSON = newJson;
             drawSchedule1(outputJSON);
         }, ()=>{});
     } else if (valorChallenge == 2) {
+        computationTime = performance.now() - t0;
         outputJSON = computeChallenge2(fileContents);
         drawSchedule2(outputJSON);
     } else {
         console.log("You have to choose a challenge!")
-    }
+    }    
 }
 
 </script>
