@@ -1,11 +1,12 @@
 function drawSchedule1(jsonOutput) {
+    console.log("JSON:", jsonOutput);
     let colorMap = new Map();
 
     let table = document.getElementById("scheduleTable");
 
     let row = table.insertRow(0);
     row.insertCell(0);
-    for (j = 0; j < jsonOutput["cost"]; j++) {
+    for (j = 0; j < jsonOutput["cost"]-1; j++) {
         let cell = row.insertCell(j + 1);
         cell.innerHTML = (j + 1).toString();
         cell.height = 23;
@@ -13,19 +14,19 @@ function drawSchedule1(jsonOutput) {
         cell.style.textAlign = "center";
     }
 
-    for (let i = 0; i < jsonOutput["solution"].length; i++) {
+    for (let i = 0; i < jsonOutput["assignation"].length; i++) {
         let row = table.insertRow(i);
         row.style.background = "#EFEFEF";
         let machine = row.insertCell(0);
-        machine.innerHTML = "Machine " + jsonOutput["solution"][i]["id"].substring(6, 8);
+        machine.innerHTML = "Machine " + jsonOutput["assignation"][i]["id"].substring(6, 8);
         machine.style.background = "#DFDFDF";
         machine.style.width = 500;
         for (j = 0; j < jsonOutput["cost"]; j++) {
-            let cell = row.insertCell(j + 1);
+            let cell = row.insertCell(j+1);
             cell.style.width = 155;
         } 
 
-        for (let task of jsonOutput["solution"][i]["tasks"]) {
+        for (let task of jsonOutput["assignation"][i]["tasks"]) {
             if (!(task["order"] in colorMap)) {
                 let color = "#" + Math.floor(Math.random()*16777215).toString(16);
                 colorMap[task["order"]] = color;
@@ -34,14 +35,14 @@ function drawSchedule1(jsonOutput) {
             let endCell = parseInt(task["end_at"]);
 
             for (k = startCell; k < endCell; k++) {
-                row.cells[k + 1].style.border = "medium solid #000000";
+                row.cells[k].style.border = "medium solid #000000";
                 if (k != startCell) {
-                    row.cells[k + 1].style.borderLeft = null;
+                    row.cells[k].style.borderLeft = null;
                 }
                 if (k != endCell - 1) {
-                    row.cells[k + 1].style.borderRight = null;
+                    row.cells[k].style.borderRight = null;
                 }
-                row.cells[k + 1].style.background = colorMap[task["order"]];
+                row.cells[k].style.background = colorMap[task["order"]];
             }
         }
     }
@@ -87,11 +88,11 @@ function drawSchedule2(jsonOutput) {
         cell.style.textAlign = "center";
     }
 
-    for (let i = 0; i < jsonOutput["solution"].length; i++) {
+    for (let i = 0; i < jsonOutput["assignation"].length; i++) {
         let row = table.insertRow(i);
         row.style.background = "#EFEFEF";
         let machine = row.insertCell(0);
-        machine.innerHTML = "Machine " + jsonOutput["solution"][i]["id"].substring(6, 8);
+        machine.innerHTML = "Machine " + jsonOutput["assignation"][i]["id"].substring(6, 8);
         machine.style.background = "#DFDFDF";
         machine.style.width = 500;
         for (j = 0; j < jsonOutput["cost"]; j++) {
@@ -99,7 +100,7 @@ function drawSchedule2(jsonOutput) {
             cell.style.width = 155;
         } 
 
-        for (let task of jsonOutput["solution"][i]["tasks"]) {
+        for (let task of jsonOutput["assignation"][i]["tasks"]) {
             if (!(task["order"] in colorMap)) {
                 let color = "#" + Math.floor(Math.random()*16777215).toString(16);
                 colorMap[task["order"]] = color;

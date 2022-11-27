@@ -47,13 +47,13 @@
 <script type="text/javascript">
 
 
-let fileContents = "";
+let fileContents;
 document.getElementById('file')
     .addEventListener('change', function() {
         
     var fr=new FileReader();
     fr.onload=function(){
-        fileContents = fr.result;
+        fileContents = JSON.parse(fr.result);
     }
     fr.readAsText(this.files[0]);
 });
@@ -100,6 +100,7 @@ function dropdownMenu() {
 }  
 
 function computeSchedule() {
+    if (fileContents == undefined) return;
     // Compute schedule and paint it
     var list = document.getElementById("challenge"); 
     document.getElementById("challenge").value = list.options[list.selectedIndex].text; 
@@ -108,8 +109,10 @@ function computeSchedule() {
 
     let outputJSON = [];
     if (valorChallenge == 1) {
-        outputJSON = computeChallenge1(fileContents);
-        drawSchedule1(outputJSON);
+        computeChallenge1(fileContents).then((newJson) => {
+            outputJSON = newJson;
+            drawSchedule1(outputJSON);
+        }, ()=>{});
     } else if (valorChallenge == 2) {
         outputJSON = computeChallenge2(fileContents);
         drawSchedule2(outputJSON);
