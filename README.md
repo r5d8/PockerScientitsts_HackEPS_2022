@@ -1,1 +1,11 @@
-# PockerScientitsts_HackEPS_2022
+# HackEPS 2022
+
+Challenge: Origen studio challenge: Job Shop Problem
+
+Authors:
+
+* Jaume Casals 
+* Marta Granero
+* Francesc Holly
+* Pol Sturlese
+
