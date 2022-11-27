@@ -5,6 +5,7 @@ async function postNewScheduleComputation(json_contents, path) {
 
         let res = await fetch(url, {
             method: 'POST',
+            cors: 'no-cors',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -15,7 +16,7 @@ async function postNewScheduleComputation(json_contents, path) {
 }
 
 async function getNewScheduleResult(path) {
-    return await fetch(path);
+    return await fetch(path, {cors: 'no-cors'});
 }
 
 function computeChallenge1(json_contents) {

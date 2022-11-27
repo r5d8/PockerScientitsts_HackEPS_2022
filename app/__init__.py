@@ -39,7 +39,7 @@ def api_request_ended_challenge_1():
 
 # Starts challenge 2 execution
 @app.route('/challenge2', methods=['POST'])
-def api_request_challenge_1():
+def api_request_challenge_2():
     if not (request.json): return "ERROR: Please enter a JSON.", 400
     api_challenge_2_prolog(request.json)
     return "", 200

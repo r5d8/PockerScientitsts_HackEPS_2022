@@ -64,6 +64,7 @@ machineExecFinishesAt(M, TL, I, F):- machineTasks(M, L), subset(TL,L), machineCo
 
 satVariable( assignation(T,H) ):- task(T), hour(H). % Means task T is assigned to an execution batch that starts to load at time H.
 satVariable( execution(M,TL,I,F) ):- machineExecFinishesAt(M, TL, I, F). % Means machine M makes execution with tasks TL starting at I, finishing at F.
+satVariable( simpleExec(M,I) ) :- machine(M), hour(I).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -72,24 +73,45 @@ satVariable( execution(M,TL,I,F) ):- machineExecFinishesAt(M, TL, I, F). % Means
 
 writeClauses(infinite):- !, maxHourInput(MaxHour), writeClauses(MaxHour),!.
 writeClauses(MaxHour):-
-    relateSatVars,
-    tasksInsideTimeWindow(MaxHour),
-    tasksOfSameOrderSorted(MaxHour),
-    nonOverlappingTasksByMachine(MaxHour),
+    relateSimplSatVar(MaxHour),
+    relateSatVars(MaxHour),
+    relateSatVarsBack(MaxHour),
+    %tasksInsideTimeWindow(MaxHour),
+    %tasksOfSameOrderSorted(MaxHour),
+    %nonOverlappingTasksByMachine(MaxHour),
     tasksGetAssignedOnce(MaxHour),
     true,!.
 writeClauses(_):- told, nl, write('writeClauses failed!'), nl,nl, halt.
 
-%Done
-relateSatVars:-
+relateSimplSatVar(MaxHour):-
     machine(M),
-    findall( assignation(T,_), (machineTasks(M,MT), member(T,MT)), Lits ),
+    between(1,MaxHour,H),
+    findall( execution(M,_,H,_),, Lits),
+    writeClause([-simpleExec(M,H), Lits]),
+    member( execution(M,T,H,F), Lits ),
+    writeClause([-execution(M,T,H,F), simpleExec(M,H)]),
+    fail.
+relateSimplSatVar(_).
+
+%Done
+relateSatVars(MaxHour):-
+    machine(M),
+    between(1, MaxHour, H),
+    findall( assignation(T,H), (machineTasks(M,MT), member(T,MT)), Lits ),
     findall( Tk, (member(assignation(Tk,_),Lits)), TL),
     machineExecFinishesAt(M, TL, H, F),
     member(assignation(TA,H), Lits),
-    writeClause(-execution(M,TL,H,F), assignation(TA,H)),
+    writeClause([-execution(M,TL,H,F), assignation(TA,H)]),
     fail.
-relateSatVars.
+relateSatVars(_).
+
+relateSatVarsBack(MaxHour):-
+    machineTasks(M,MT),
+    member(T,MT),
+    between(1, MaxHour, H),
+    writeClause([-assignation(T,H)|simpleExec(M,H)]),
+    fail.
+relateSatVarsBack(_).
 
 %Done
 tasksInsideTimeWindow(MaxHour) :- 
@@ -106,7 +128,7 @@ nonOverlappingTasksByMachine(MaxHour):-
     machineTasks(M,L),
     subset(TL1,L),
     subset(TL2,L),
-    \listEquals(TL1,TL2),
+    \+listEquals(TL1,TL2),
     between(1,MaxHour,H1),
     between(1,MaxHour,H2),
     H1 =< H2,
@@ -124,7 +146,7 @@ tasksOfSameOrderSorted(MaxHour):-
     task(T1),
     task(T2),
     preceedes(T1,T2),
-    findall( execution(M,TL,H,_), (machineTasks(M,MT), subset(TL,MT), member(T1,TL), between(1,MaxHour,H)), Lits ),
+    findall( execution(M,TL,H,_), (member(T1,TL), between(1,MaxHour,H)), Lits ),
     member(execution(M,TL,I,F), Lits),
     between(I,F,H2),
     writeClause([-execution(M,TL,I,F),-assignation(T2,H2)]),
@@ -142,15 +164,13 @@ tasksGetAssignedOnce(_).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 3. This predicate displays a given solution M:
 
-displaySol(Model):- write('SOLUTIOOON'), nl, fail.
-    %machineTasks(M,LM),
-    %write('Machine: '), write(M), nl,
-    %task(T), member(T,LM),
-    %write('Task: '), write(T), write(' '),
-    %member( assignation(T,H), Model ),
-    %taskDuration(T,D),
-    %EndT is H+D-1,
-    %write(H), write('-'), write(EndT), nl, fail.
+displaySol(Model):-
+    machine(M),
+    write('Machine: '), write(M), nl,
+    member( execution(M,TL,I,F), Model ),
+    write('Exec: '), write(I), write('-'), write(F), nl, write('Tasks: '),
+    task(T), member(T,TL),
+    write(T), write(' '), nl, fail.
 displaySol(_):- nl,nl,!.
 
 
@@ -158,9 +178,12 @@ displaySol(_):- nl,nl,!.
 % 4. This predicate computes the cost of a given solution M:
     
 costOfThisSolution(M, Cost):-
+    %findall(EndT, member(assignation(T,EndT),M), FinishingHours),
+    %write(FinishingHours),
     findall(EndT, member(execution(_,_,_,EndT),M), FinishingHours),
+    write(FinishingHours),
     sort(FinishingHours, SFH),
-    reverse(SFH, [Cost|_]).
+    reverse(SFH, [Cost|_]), write('Found cost of solution...'),nl.
     
 % precondition: elements in list are ordered in increasing value
 maximumDifferenceBetweenConsecutiveElems([],0).
